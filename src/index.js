@@ -1,9 +1,11 @@
-var http = require("http");
+var Tesseract = require("tesseract.js"),
+  image = require("path").resolve(__dirname, "cosmic.png");
 
-//create a server object:
-http
-  .createServer(function(req, res) {
-    res.write("Hello World!"); //write a response to the client
-    res.end(); //end the response
+Tesseract.detect(image)
+  .progress(function(info) {
+    console.log(info);
   })
-  .listen(8080); //the server object listens on port 8080
+  .then(function(data) {
+    console.log("done", data);
+    process.exit();
+  });
